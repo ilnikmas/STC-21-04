@@ -6,6 +6,14 @@ import java.util.Random;
 public class Methods {
     private static Random random = new Random();
 
+    static ArrayList<Person> listGeneration() {
+        ArrayList<Person> personArray = new ArrayList<Person>();
+        for (int i = 0; i < 100; i++) {
+            personArray.add(new Person(nameGenerate(), ageGenerate(), sexGenerate()));
+        }
+        return personArray;
+    }
+
     static char letterGen() {
         int dec = random.nextInt(26) + 97;
         String hexStr = Integer.toHexString(dec);
