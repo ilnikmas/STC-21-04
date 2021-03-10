@@ -1,5 +1,11 @@
 package ru.innopolis.ilnikmas.stc.lesson02.task3;
 
+/**
+ * Класс Person
+ *
+ * @author Маслёнченко И. Н.
+ */
+
 public class Person {
     private String name;
     private int age;
