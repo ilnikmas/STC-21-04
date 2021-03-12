@@ -1,6 +1,6 @@
 package ru.innopolis.ilnikmas.stc.lesson02.task3;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Класс, реализующий сортировку выбором
@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public class SelectionSort {
-    public static void sort(ArrayList<Person> array) {
+    public static void sort(List<Person> array) {
         for (int i = 0; i < array.size(); i++) {
             Person min = array.get(i);
             int min_i = i;

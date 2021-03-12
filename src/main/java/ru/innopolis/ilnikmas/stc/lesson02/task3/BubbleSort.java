@@ -1,6 +1,6 @@
 package ru.innopolis.ilnikmas.stc.lesson02.task3;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Класс, реализующий сортировку пузырьковым методом
@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public class BubbleSort {
-    public static void sort(ArrayList<Person> array) {
+    public static void sort(List<Person> array) {
 
         for (int i = 0; i < array.size() - 1; i++) {
             for (int j = array.size() - 1; j > i; j--) {
