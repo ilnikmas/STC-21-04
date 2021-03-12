@@ -1,6 +1,7 @@
 package ru.innopolis.ilnikmas.stc.lesson02.task3;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -18,8 +19,8 @@ public class Methods {
      * @return список, состоящий из num объектов
      */
 
-    static ArrayList<Person> listGeneration(int num) {
-        ArrayList<Person> personArray = new ArrayList<Person>();
+    static List<Person> listGeneration(int num) {
+        List<Person> personArray = new ArrayList<Person>();
         for (int i = 0; i < num; i++) {
             personArray.add(new Person(nameGenerate(), ageGenerate(), sexGenerate()));
         }
