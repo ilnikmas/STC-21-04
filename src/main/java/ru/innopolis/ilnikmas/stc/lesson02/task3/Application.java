@@ -16,18 +16,18 @@ public class Application {
         System.out.println("---------------------------------------");
 
         long timeStart = System.currentTimeMillis();
-        BubbleSort.sort(personArray);
+//        BubbleSort.sort(personArray);
         long timeFinish = System.currentTimeMillis();
-        System.out.println("Время выполнения: " + (timeFinish - timeStart) + " мс");
-
-        System.out.println("---------------------------------------");
+//        System.out.println("Время выполнения: " + (timeFinish - timeStart) + " мс");
+//
+//        System.out.println("---------------------------------------");
 
         timeStart = System.currentTimeMillis();
         SelectionSort.sort(personArray);
         timeFinish = System.currentTimeMillis();
         System.out.println("Время выполнения: " + (timeFinish - timeStart) + " мс");
-//        for (Person person : personArray) {
-//            System.out.println(person);
-//        }
+        for (Person person : personArray) {
+            System.out.println(person);
+        }
     }
 }

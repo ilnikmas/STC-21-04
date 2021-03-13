@@ -17,16 +17,7 @@ public class BubbleSort {
                     if ((array.get(j - 1).getAge() == array.get(j).getAge()) & (array.get(j - 1).getName().equals(array.get(j).getName()))) {
                         throw new DuplicateRecordException("В таблице имеется дубликат");
                     }
-                    if (((array.get(j - 1).getSex().equals(Sex.MAN) && array.get(j).getSex().equals(Sex.MAN))
-                            && (array.get(j - 1).getAge() < array.get(j).getAge())) || (((array.get(j - 1).getSex().equals(Sex.MAN)
-                            && array.get(j).getSex().equals(Sex.MAN))) && ((array.get(j - 1).getAge() == array.get(j).getAge())
-                            && (array.get(j - 1).getName().compareTo(array.get(j).getName()) > 0)))
-                            || ((array.get(j - 1).getSex().equals(Sex.WOMAN) && array.get(j).getSex().equals(Sex.WOMAN))
-                            && (array.get(j - 1).getAge() < array.get(j).getAge())) || (((array.get(j - 1).getSex().equals(Sex.WOMAN)
-                            && array.get(j).getSex().equals(Sex.WOMAN))) && ((array.get(j - 1).getAge() == array.get(j).getAge())
-                            && (array.get(j - 1).getName().compareTo(array.get(j).getName()) > 0)))
-                            || (array.get(j - 1).getSex().equals(Sex.WOMAN) && array.get(j).getSex().equals(Sex.MAN))
-                    ) {
+                    if (array.get(j - 1).compareTo(array.get(j)) > 0) {
                         Person tmp = array.get(j - 1);
                         array.remove(j - 1);
                         array.add(j, tmp);

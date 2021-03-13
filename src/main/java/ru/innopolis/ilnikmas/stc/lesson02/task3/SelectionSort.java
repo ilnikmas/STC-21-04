@@ -18,15 +18,7 @@ public class SelectionSort {
                     if ((array.get(j).getName().equals(min.getName())) & (array.get(j).getAge() == min.getAge())) {
                         throw new DuplicateRecordException("В таблице имеется дубликат");
                     }
-                    if (((array.get(j).getSex().equals(Sex.MAN) && min.getSex().equals(Sex.MAN))
-                            && (array.get(j).getAge() > min.getAge())) || (((array.get(j).getSex().equals(Sex.MAN)
-                            && min.getSex().equals(Sex.MAN))) && ((array.get(j).getAge() == min.getAge())
-                            && (array.get(j).getName().compareTo(min.getName()) < 0)))
-                            || ((array.get(j).getSex().equals(Sex.WOMAN) && min.getSex().equals(Sex.WOMAN))
-                            && (array.get(j).getAge() > min.getAge())) || (((array.get(j).getSex().equals(Sex.WOMAN)
-                            && min.getSex().equals(Sex.WOMAN))) && ((array.get(j).getAge() == min.getAge())
-                            && (array.get(j).getName().compareTo(min.getName()) < 0)))
-                            || (array.get(j).getSex().equals(Sex.MAN) && min.getSex().equals(Sex.WOMAN))) {
+                    if (array.get(j).compareTo(min) < 0) {
                         min = array.get(j);
                         min_i = j;
                     }
