@@ -11,6 +11,7 @@ import java.util.Random;
  */
 
 public class Methods {
+    private static final int BOUND = 26; //Количество букв английского алфавита
     private static Random random = new Random();
 
     /**
@@ -32,7 +33,7 @@ public class Methods {
      * @return сивмол в диапазоне от a до z
      */
     static char letterGen() {
-        int dec = random.nextInt(26) + 97;
+        int dec = random.nextInt(BOUND) + 'a';
         String hexStr = Integer.toHexString(dec);
         return (char) Integer.parseInt(hexStr, 16);
     }

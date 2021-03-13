@@ -42,6 +42,19 @@ public class Person {
         this.name = name;
     }
 
+    public int compareTo(Person person) {
+        int result = 0;
+        if (this.getSex() != person.getSex()) {
+            result = this.getSex() == Sex.MAN ? -1 : 1;
+            return result;
+        }
+        if (this.getAge() - person.getAge() != 0) {
+            return this.getAge() - person.getAge() > 0 ? -1 : 1;
+        }
+        result = this.getName().compareTo(person.getName());
+        return result;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
