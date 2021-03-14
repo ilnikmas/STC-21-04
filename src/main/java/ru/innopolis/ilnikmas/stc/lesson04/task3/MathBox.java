@@ -1,12 +1,18 @@
 package ru.innopolis.ilnikmas.stc.lesson04.task3;
 
+import ru.innopolis.ilnikmas.stc.lesson04.task2.ObjectBox;
+
 import java.util.*;
 
-public class MathBox<T extends Number> {
-    private List<Number> collection;
+/**
+ * Класс MathBox, доработанный
+ * @author Маслёнченко И. Н.
+ * @param <T>
+ */
+
+public class MathBox<T extends Number> extends ObjectBox<Number> {
 
     MathBox(T[] numberArray){
-        collection = new ArrayList<>();
         try {
             List<T> duplicateList = getDuplicates(numberArray);
             if (duplicateList.size() > 0) throw new DuplicateElementException("Найдены дубликаты: " + duplicateList);
@@ -36,15 +42,12 @@ public class MathBox<T extends Number> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MathBox)) return false;
-        MathBox<?> mathBox = (MathBox<?>) o;
-        return collection.equals(mathBox.collection);
+        return super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(collection);
+        return super.hashCode();
     }
 
     @Override

@@ -2,6 +2,12 @@ package ru.innopolis.ilnikmas.stc.lesson04.task1;
 
 import java.util.*;
 
+/**
+ * Класс MathBox
+ * @author Маслёнченко И. Н.
+ * @param <T>
+ */
+
 public class MathBox<T extends Number> {
     private List<Number> collection;
 

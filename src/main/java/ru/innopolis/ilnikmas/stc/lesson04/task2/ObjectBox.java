@@ -4,8 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Класс ObjectBox
+ * @author Маслёнченко И. Н.
+ * @param <T>
+ */
+
 public class ObjectBox<T extends Object> {
-    private List<T> collection = new ArrayList<>();
+    public List<T> collection = new ArrayList<>();
 
     public void addObject(T object) {
         collection.add(object);
