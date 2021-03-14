@@ -1,19 +1,21 @@
 package ru.innopolis.ilnikmas.stc.lesson05.task1;
 
-public class Person {
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Класс Person, описывающий хозяина животного
+ * @author Маслёнченко И. Н.
+ */
+class Person {
     private String name;
     private int age;
     private Sex sex;
 
-    public Person(String name, int age, Sex sex) {
+    Person(String name, int age, Sex sex) {
         this.name = name;
         this.age = age;
         this.sex = sex;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
     public String getName() {

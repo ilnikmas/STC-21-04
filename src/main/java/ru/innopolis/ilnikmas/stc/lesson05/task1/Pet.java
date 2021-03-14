@@ -1,27 +1,21 @@
 package ru.innopolis.ilnikmas.stc.lesson05.task1;
 
+/**
+ * Класс Pet, описывающий животное
+ * @author Маслёнченко И. Н.
+ */
 public class Pet {
     private int id;
     private String name;
-    private Person owner;
     private int weight;
+    private Person owner;
 
-    public Pet(int id, String name, Person owner, int weight) {
+    public Pet(int id, String name, int weight, Person owner) {
         this.id = id;
         this.name = name;
-        this.owner = owner;
         this.weight = weight;
+        this.owner = owner;
     }
-
-//    public int compareTo(Pet pet) {
-//        int result = 0;
-//        result = this.getName().compareTo(pet.getName());
-//        if (this.getWeight() - pet.getWeight() != 0) {
-//            result = this.getWeight() - pet.getWeight() > 0 ? 1 : -1;
-//        }
-//        result = this.getOwner().getName().compareTo(pet.getOwner().getName());
-//        return result;
-//    }
 
     public int getId() {
         return id;
@@ -39,14 +33,6 @@ public class Pet {
         this.name = name;
     }
 
-    public Person getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Person owner) {
-        this.owner = owner;
-    }
-
     public int getWeight() {
         return weight;
     }
@@ -55,13 +41,21 @@ public class Pet {
         this.weight = weight;
     }
 
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
+    }
+
     @Override
     public String toString() {
         return "Pet{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", owner=" + owner +
-                ", weight=" + weight +
+                ", weight=" + weight + '\'' +
+                ", owner=" + owner.getName() + '\'' +
                 '}';
     }
 }
