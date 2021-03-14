@@ -1,7 +1,5 @@
 package ru.innopolis.ilnikmas.stc.lesson02.task3;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static ru.innopolis.ilnikmas.stc.lesson02.task3.Methods.*;
@@ -9,7 +7,7 @@ import static ru.innopolis.ilnikmas.stc.lesson02.task3.Methods.*;
 public class Application {
     public static void main(String[] args) {
         //Генерация массива
-        List<Person> personArray = listGeneration(100);
+        List<Person> personArray = listGeneration(300);
         for (Person person: personArray) {
             System.out.println(person);
         }
