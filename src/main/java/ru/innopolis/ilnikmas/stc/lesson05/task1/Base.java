@@ -8,6 +8,7 @@ import java.util.*;
  */
 class Base {
     private Map<Integer, Pet> petList = new HashMap<>();
+    private Map<String, List<Pet>> indexList = new HashMap<>();
 
     /**
      * Метод добавления животного в картотеку
@@ -17,6 +18,11 @@ class Base {
         try {
             if (petList.putIfAbsent(pet.getId(), pet) != null)
             throw new PetDuplicateException("Животное с данным id уже есть: " + pet.getId());
+            //Заполнение индекса
+            List<Pet> indexPet = indexList.getOrDefault(pet.getName(), new ArrayList<>());
+            indexPet.add(pet);
+            indexList.put(pet.getName(), indexPet);
+            //
         } catch (PetDuplicateException e) {
             System.out.println(e.getMessage());
         }
@@ -28,26 +34,59 @@ class Base {
      * @return список животных с именем petName
      */
     List<Pet> petFind(String petName){
-        List<Pet> foundPet = new ArrayList<>();
-        for (Map.Entry<Integer, Pet> entry : petList.entrySet()) {
-            if (entry.getValue().getName().equals(petName)) {
-                foundPet.add(entry.getValue());
-            }
-        }
-        return foundPet;
+        return indexList.get(petName);
     }
 
     /**
      * Метод, изменяющий параметры животного
      * @param id
-     * @param name
-     * @param weight
+     * @param newName
      */
-    void petEdit(int id, String name, int weight){
-        if (!name.equals("")) petList.get(id).setName(name);
-        if (weight != 0) petList.get(id).setWeight(weight);
+    void editName(Integer id, String newName) {
+        try {
+            if (petList.containsKey(id)) {
+                Pet pet = petList.get(id);
+                String oldName = petList.get(id).getName();
+                List<Pet> list = new ArrayList<>(indexList.get(oldName));
+                if (!"".equals(newName)) {
+                    petList.remove(id, pet);
+                    list.remove(pet);
+                    pet.setName(newName);
+                    petAdd(pet);
+                    indexList.remove(oldName);
+                    indexList.put(oldName, list);
+                    for (Map.Entry entry : indexList.entrySet()) {
+                        System.out.println(entry);
+                    }
+                } else throw new Exception("Введённый id не существует!");
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
+    void editWeight(Integer id, Integer newWeight) {
+        try {
+            if (petList.containsKey(id)) {
+                Pet pet = petList.get(id);
+                List<Pet> list = new ArrayList<>(indexList.get(pet.getName()));
+                if (newWeight != null) {
+                    petList.remove(id, pet);
+                    list.remove(pet);
+                    pet.setWeight(newWeight);
+                    list.add(pet);
+                    petAdd(pet);
+                    indexList.remove(pet.getName());
+                    indexList.put(pet.getName(), list);
+                    for (Map.Entry entry : indexList.entrySet()) {
+                        System.out.println(entry);
+                    }
+                } else throw new Exception("Введённый id не существует!");
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 
     /**
      * Метод вывода в консоль отсортированного списка животных
@@ -57,6 +96,12 @@ class Base {
         Collections.sort(list, Comparator.comparing(Pet::getName).thenComparing(Pet::getWeight));
         for (Pet pet : list) {
             System.out.println(pet);
+        }
+    }
+
+    void printAll(){
+        for (Map.Entry entry : petList.entrySet()){
+            System.out.println(entry);
         }
     }
 

@@ -18,7 +18,11 @@ public class Application {
 
         base.printPets();
         System.out.println("----------------------------------");
-        base.petEdit(2, "",100);
-        base.printPets();
+        base.editName(116554, "Aaaa");
+        base.editWeight(17665565, 100);
+        base.printAll();
+//        base.printPets();
+//        System.out.println(base.petFind("Dddd"));
+//        System.out.println(base.petFind("Aaaa"));
     }
 }
