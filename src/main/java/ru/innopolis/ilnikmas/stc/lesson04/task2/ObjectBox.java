@@ -10,8 +10,8 @@ import java.util.Objects;
  * @param <T>
  */
 
-public class ObjectBox<T extends Object> {
-    public List<T> collection = new ArrayList<>();
+public class ObjectBox<T> {
+    protected List<T> collection = new ArrayList<>();
 
     public void addObject(T object) {
         collection.add(object);
