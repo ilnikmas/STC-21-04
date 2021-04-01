@@ -8,7 +8,7 @@ import java.math.BigInteger;
 
 public class Factorial {
     // Массив для хранения промежуточных значений вычисления факториала
-    private static BigInteger[] factorials = new BigInteger[1000];
+    private static BigInteger[] factorials = new BigInteger[20];
 
     /**
      * Метод для вычисления факториала.
@@ -20,16 +20,17 @@ public class Factorial {
      */
     public String calculate(int number){
         BigInteger result = BigInteger.valueOf(1);
-        if (number ==0 || number ==1) {
+        if (number == 0 || number == 1) {
             result = BigInteger.valueOf(1);
             factorials[number] = result;
         }
         for (int i = 2; i <= number; i++){
-            if (getFactorial(i) == null){
-                result = result.multiply(BigInteger.valueOf(i));
-                putFactorial(i, result);
-            } else result = getFactorial(i);
-
+            synchronized (factorials) {
+                if (getFactorial(i) == null) {
+                    result = result.multiply(BigInteger.valueOf(i));
+                    putFactorial(i, result);
+                } else result = getFactorial(i);
+            }
         }
         return "Факториал " + number + " = " + result;
     }
