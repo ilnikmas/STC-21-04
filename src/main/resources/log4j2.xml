@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="pattern">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="folder">target/logs</Property>
+        <Property name="filename">application</Property>
+    </Properties>
+    <Appenders>
+        <File name="File" fileName="${folder}/${filename}.log">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <RollingFile name="FileDebug" fileName="${folder}/${filename}_debug.log" filePattern="${folder}/$${date:yyyy-MM}/${filename}-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="${pattern}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+        </RollingFile>
+        <RollingFile name="FileErrors" fileName="${folder}/${filename}_error.log" filePattern="${folder}/$${date:yyyy-MM}/${filename}_error-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="${pattern}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+        </RollingFile>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="warn" additivity="false">
+            <AppenderRef ref="FileErrors"/>
+        </Root>
+        <Logger name="ru.innopolis.ilnikmas.stc.lesson22" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Logger>
+    </Loggers>
+</Configuration>
