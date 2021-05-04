@@ -1,11 +1,9 @@
-package ru.innopolis.ilnikmas.stc.lesson22.dao;
+package ru.innopolis.ilnikmas.stc.lesson23.dao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.innopolis.ilnikmas.stc.lesson22.DBUtil;
-import ru.innopolis.ilnikmas.stc.lesson22.connection.ConnectionManager;
-import ru.innopolis.ilnikmas.stc.lesson22.connection.ConnectionManagerJDBCImpl;
-import ru.innopolis.ilnikmas.stc.lesson22.model.Product;
+import ru.innopolis.ilnikmas.stc.lesson23.connection.ConnectionManager;
+import ru.innopolis.ilnikmas.stc.lesson23.model.Product;
 
 import java.sql.*;
 import java.util.List;
@@ -16,10 +14,16 @@ import java.util.List;
 
 public class ProductDAOJdbcImpl implements ProductDAO {
     private static final Logger logger = LogManager.getLogger(ProductDAOJdbcImpl.class);
-    private static final ConnectionManager connectionManager = ConnectionManagerJDBCImpl.getInstance();
+    public static final String INSERT_INTO_PRODUCT = "INSERT INTO product values (DEFAULT, ?, ?, ?, ?)";
+    public static final String SELECT_FROM_PRODUCT = "SELECT * FROM product WHERE productId = ?";
+    public static final String UPDATE_PRODUCT = "UPDATE product SET product=?, price=?, manufacturer=?, originCountry=? WHERE productId=?";
+    public static final String DELETE_FROM_PRODUCT = "DELETE FROM product WHERE productId=?";
+    public static final String ADD_BATCH = "INSERT INTO product VALUES (DEFAULT, ?, ?, ?, ?)";
 
-    public ProductDAOJdbcImpl() throws SQLException {
-        DBUtil.renewDatabase(connectionManager.getConnection());
+    private ConnectionManager connectionManager;
+
+    public ProductDAOJdbcImpl(ConnectionManager connectionManager) throws SQLException {
+        this.connectionManager = connectionManager;
     }
 
     /**
@@ -31,7 +35,7 @@ public class ProductDAOJdbcImpl implements ProductDAO {
     public Long addProduct(Product product) {
         try (Connection connection = connectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "INSERT INTO product values (DEFAULT, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+                     INSERT_INTO_PRODUCT, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, product.getProduct());
             preparedStatement.setDouble(2, product.getPrice());
             preparedStatement.setString(3, product.getManufacturer());
@@ -58,8 +62,7 @@ public class ProductDAOJdbcImpl implements ProductDAO {
     public Product getProductById(Long id) {
         Product product = null;
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT * FROM product WHERE productId = ?")) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_PRODUCT)) {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -69,9 +72,9 @@ public class ProductDAOJdbcImpl implements ProductDAO {
                             resultSet.getDouble(3),
                             resultSet.getString(4),
                             resultSet.getString(5));
+                    logger.info("Product with id {}: {} ", id, product);
                     return product;
                 }
-                logger.info("Product with id {}: {} ", id, product);
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -87,9 +90,7 @@ public class ProductDAOJdbcImpl implements ProductDAO {
     @Override
     public boolean updateProduct(Product product) {
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "UPDATE product SET product=?, price=?, manufacturer=?, originCountry=? " +
-                             "WHERE productId=?")) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCT)) {
             preparedStatement.setString(1, product.getProduct());
             preparedStatement.setDouble(2, product.getPrice());
             preparedStatement.setString(3, product.getManufacturer());
@@ -112,8 +113,7 @@ public class ProductDAOJdbcImpl implements ProductDAO {
     @Override
     public boolean deleteProductById(Long id) {
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "DELETE FROM product WHERE productId=?")) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_PRODUCT)) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
             logger.info("Product with id {} deleted", id);
@@ -130,8 +130,7 @@ public class ProductDAOJdbcImpl implements ProductDAO {
     @Override
     public void addProductByBatch(List<Product> products) throws SQLException {
         try (Connection connection = connectionManager.getConnection();
-             PreparedStatement statement = connection.prepareStatement(
-                     "INSERT INTO product VALUES (DEFAULT, ?, ?, ?, ?)")) {
+             PreparedStatement statement = connection.prepareStatement(ADD_BATCH)) {
             for (Product product : products) {
                 statement.setString(1, product.getProduct());
                 statement.setDouble(2, product.getPrice());
@@ -143,7 +142,7 @@ public class ProductDAOJdbcImpl implements ProductDAO {
             connection.commit();
             logger.info("Products added: {}", products);
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("Косяк в методе addProductByBatch ", e);
         }
     }
 
